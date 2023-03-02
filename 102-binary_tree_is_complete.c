@@ -1,20 +1,35 @@
 #include "binary_trees.h"
 
+/**
+  * countNodes - count the nodes
+  * @root: pointer to tree
+  * Return: number of noode
+  */
+
+int countNodes(binary_tree_t *root)
+{
+	if (root == NULL)
+		return (0);
+	return (1 + countNodes(root->left) + countNodes(root->right));
+}
+
 
 /**
-  * binary_tree_levelorder - levelorder traversal
+  * binary_tree_is_complete - checks a binary tree os complete
   * @tree: pointer to the node
-  * @func: pointer to functio
-  * Return: void
+  * Return: 1 if complete, 0 otherwise
   */
-void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
+int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	if (tree && func)
-	{
-		if (tree == NULL)
-			return;
-		func(tree->n);
-		binary_tree_levelorder(tree->left, func);
-		binary_tree_levelorder(tree->right, func);
-	}
+	int lh, rh;
+
+	if (tree == NULL)
+		return (0);
+
+	lh = countNodes(tree->left);
+	rh = countNodes(tree->right);
+	if (lh == rh && binary_tree_is_complete(tree->left) &&
+		binary_tree_is_complete(tree->right))
+		return (1);
+	return (0);
 }
