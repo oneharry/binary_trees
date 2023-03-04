@@ -2,21 +2,21 @@
 
 
 /**
-  * binary_tree_rotate_left - rotate binary tree to the left
+  * binary_tree_rotate_righ - rotate binary tree to the right
   * @tree: pointer to the node
   * Return: pointer to the new root node
   */
-binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree)
+binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree)
 {
 	binary_tree_t *pivot, *tmp;
 
-	if (tree == NULL || tree->right == NULL)
+	if (tree == NULL || tree->left == NULL)
 		return (NULL);
 
-	pivot = tree->right;
-	tmp = pivot->left;
-	pivot->left = tree;
-	tree->right = tmp;
+	pivot = tree->left;
+	tmp = pivot->right;
+	pivot->right = tree;
+	tree->left = tmp;
 	if (tmp != NULL)
 		tmp->parent = tree;
 	tmp = tree->parent;
@@ -24,10 +24,10 @@ binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree)
 	pivot->parent = tmp;
 	if (tmp != NULL)
 	{
-		if (tmp->left == tree)
-			tmp->left = pivot;
-		else
+		if (tmp->right == tree)
 			tmp->right = pivot;
+		else
+			tmp->left = pivot;
 	}
 	return (pivot);
 }
